@@ -2,11 +2,13 @@
 package Logica;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 public class FuncionHabitacion {
     private Conexion mysql = new Conexion();
-    private Connection cn= mysql.conectar();
+    private Connection conec= mysql.conectar();
     private String sSQL="";
     public Integer totalRegistro;
     
@@ -22,7 +24,18 @@ public class FuncionHabitacion {
         sSQL = "Select * from habitacion where piso like '%"+ buscar+"%' order by id_habitacion";
         
         //Falta Try Catch y return
-        
+        try {
+            Statement stateM = conec.createStatement();
+            ResultSet resultS = stateM.executeQuery(sSQL);
+            
+            while(resultS.next()){
+                registro[0]= resultS.getString("idhabitacion");
+            }
+            
+        } catch (Exception e) {
+            
+            
+        }
         
     }
  
