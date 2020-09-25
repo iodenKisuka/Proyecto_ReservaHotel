@@ -83,23 +83,51 @@ public class FuncionHabitacion {
        
     }
      public boolean editar(Vhabitacion datos){
-        sSQL="update habitacion set numero=?, piso=?,descripcion=?,caracteristicas=?,precio_diario=?,estado=?, tipo_habitacion=?";
+        sSQL="update habitacion set numero=?, piso=?,descripcion=?,caracteristicas=?,precio_diario=?,estado=?, tipo_habitacion=?"
+                + " where idhabitacion=?";
         try {
+            PreparedStatement prepareSt = conec.prepareStatement(sSQL) ;
+            prepareSt.setString(1,datos.getNumero());
+            prepareSt.setString(2,datos.getPiso());
+            prepareSt.setString(3,datos.getDescripcion());
+            prepareSt.setString(4,datos.getCaracteristicas());
+            prepareSt.setDouble(5,datos.getPrecio_diario());
+            prepareSt.setString(6,datos.getEstado());
+            prepareSt.setString(7,datos.getTipo_habitacion());
+            prepareSt.setInt(8,datos.getIdhabitacion());
             
-            
+            int num = prepareSt.executeUpdate();
+            if(num!=0){
+                return true;
+            }
+            else{
+                return false;
+            }
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
+            return false;
         }
        
     }
      
       public boolean eliminar (Vhabitacion datos){
-        
+        sSQL="delete from habitacion where idhabitacion=?";
         try {
             
+            PreparedStatement prepareSt = conec.prepareStatement(sSQL) ;
+            prepareSt.setInt(1,datos.getIdhabitacion());
+            
+            int num = prepareSt.executeUpdate();
+            if(num!=0){
+                return true;
+            }
+            else{
+                return false;
+            }
             
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
+           return false;
         }
        
     }
