@@ -5,6 +5,11 @@
  */
 package Presentacion;
 
+import Datos.ValorHabitacion;
+import Logica.FuncionHabitacion;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author DLCS
@@ -17,7 +22,87 @@ public class FormHabitacion extends javax.swing.JFrame {
     public FormHabitacion() {
         initComponents();
     }
-
+    // declaracion de variables
+    private String accion="guardar";
+    
+    
+    void ocultar_columnas(){
+        //traigo la tabla le pido la columna y ledigo que esa columna va a tener un ancho max es de cero
+        tablaListado.getColumnModel().getColumn(0).setMaxWidth(0);
+        //ancho minimo es de cero
+        tablaListado.getColumnModel().getColumn(0).setMinWidth(0);
+        //
+        tablaListado.getColumnModel().getColumn(0).setPreferredWidth(0);
+    }
+    
+    //deshabilitar la caja de texto
+    void inhabilitar(){
+        //no se visualice
+        txt_IdHabitacion.setVisible(false);
+        //Este deshabilitado
+        cboPiso.setEnabled(false);
+        txtNumero.setEnabled(false);
+        etiquetaDescripcion.setEnabled(false);
+        etiquetaCaracteristica.setEnabled(false);
+        etiquetaPrecioDiario.setEnabled(false);
+        cboEstado.setEnabled(false);
+        cboTipo.setEnabled(false);
+        // inhabilitar botones
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        //dejar las area de texto vacia
+        txt_IdHabitacion.setText("");
+        txtPrecioDiario.setText("");
+        txtCaracteristica.setText("");
+        txtDescripcion.setText("");
+        
+    }
+    
+    void habilitar(){
+       // txt_IdHabitacion.setVisible(false);
+      
+        cboPiso.setEnabled(true);
+        txtNumero.setEnabled(true);
+        etiquetaDescripcion.setEnabled(true);
+        etiquetaCaracteristica.setEnabled(true);
+        etiquetaPrecioDiario.setEnabled(true);
+        cboEstado.setEnabled(true);
+        cboTipo.setEnabled(true);
+        
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+       
+        txt_IdHabitacion.setText("");
+        txtDescripcion.setText("");
+        txtCaracteristica.setText("");
+        txtPrecioDiario.setText("");
+    }
+    
+    void mostrar(String buscar){
+        try {
+            DefaultTableModel modelo;
+            FuncionHabitacion func = new FuncionHabitacion();
+            modelo = func.mostrar(buscar);
+            
+            tablaListado.setModel(modelo);
+            ocultar_columnas();
+            totalRegistro.setText("Total Registro: "+Integer.toString(func.totalRegistro));
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane,e);
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,22 +117,24 @@ public class FormHabitacion extends javax.swing.JFrame {
         txtNumero = new javax.swing.JTextField();
         CboEstado = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        txtDescripcion = new javax.swing.JLabel();
+        cboPiso = new javax.swing.JComboBox<>();
+        etiquetaDescripcion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        txtCaracteristicas = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextArea();
+        etiquetaCaracteristica = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        txtPrecioDiario = new javax.swing.JLabel();
-        txtNumero1 = new javax.swing.JTextField();
+        txtCaracteristica = new javax.swing.JTextArea();
+        etiquetaPrecioDiario = new javax.swing.JLabel();
+        txtPrecioDiario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cboTipo = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cboEstado = new javax.swing.JComboBox<>();
         btnNuevo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txt_IdHabitacion = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -81,34 +168,34 @@ public class FormHabitacion extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 0, 51));
         jLabel3.setText("Número :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piso1", "Piso 2", "Piso 3", "Piso 4", "Piso 5", "Piso 6", "Piso 7" }));
+        cboPiso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piso1", "Piso 2", "Piso 3", "Piso 4", "Piso 5", "Piso 6", "Piso 7" }));
 
-        txtDescripcion.setForeground(new java.awt.Color(51, 0, 51));
-        txtDescripcion.setText("Descripción:");
+        etiquetaDescripcion.setForeground(new java.awt.Color(51, 0, 51));
+        etiquetaDescripcion.setText("Descripción:");
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setForeground(new java.awt.Color(0, 0, 0));
+        txtDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcion);
 
-        txtCaracteristicas.setForeground(new java.awt.Color(51, 0, 51));
-        txtCaracteristicas.setText("Caracteristicas:");
+        etiquetaCaracteristica.setForeground(new java.awt.Color(51, 0, 51));
+        etiquetaCaracteristica.setText("Caracteristicas:");
 
-        jTextArea2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea2.setColumns(20);
-        jTextArea2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        txtCaracteristica.setBackground(new java.awt.Color(255, 255, 255));
+        txtCaracteristica.setColumns(20);
+        txtCaracteristica.setForeground(new java.awt.Color(0, 0, 0));
+        txtCaracteristica.setRows(5);
+        jScrollPane2.setViewportView(txtCaracteristica);
 
-        txtPrecioDiario.setForeground(new java.awt.Color(51, 0, 51));
-        txtPrecioDiario.setText("Precio Diario:");
+        etiquetaPrecioDiario.setForeground(new java.awt.Color(51, 0, 51));
+        etiquetaPrecioDiario.setText("Precio Diario:");
 
-        txtNumero1.setBackground(new java.awt.Color(255, 255, 255));
-        txtNumero1.setForeground(new java.awt.Color(0, 0, 0));
-        txtNumero1.addActionListener(new java.awt.event.ActionListener() {
+        txtPrecioDiario.setBackground(new java.awt.Color(255, 255, 255));
+        txtPrecioDiario.setForeground(new java.awt.Color(0, 0, 0));
+        txtPrecioDiario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumero1ActionPerformed(evt);
+                txtPrecioDiarioActionPerformed(evt);
             }
         });
 
@@ -119,17 +206,43 @@ public class FormHabitacion extends javax.swing.JFrame {
         jLabel5.setText("Piso:");
 
         cboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Matrimonial", "Familiar", "Presidencial" }));
+        cboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTipoActionPerformed(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible", "Ocupado", "Mantenimiento" }));
+        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible", "Ocupado", "Mantenimiento" }));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/folder_add.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Save_64.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Folder-Delete.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+
+        txt_IdHabitacion.setBackground(new java.awt.Color(255, 255, 255));
+        txt_IdHabitacion.setForeground(new java.awt.Color(0, 0, 0));
+        txt_IdHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_IdHabitacionActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setForeground(new java.awt.Color(51, 0, 51));
+        jLabel6.setText("identificador:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -139,17 +252,22 @@ public class FormHabitacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5))
                                 .addGap(67, 67, 67)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cboPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_IdHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtDescripcion)
+                                .addComponent(etiquetaDescripcion)
                                 .addGap(47, 47, 47)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -158,15 +276,15 @@ public class FormHabitacion extends javax.swing.JFrame {
                                     .addComponent(CboEstado))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCaracteristicas)
-                                    .addComponent(txtPrecioDiario))
+                                    .addComponent(etiquetaCaracteristica)
+                                    .addComponent(etiquetaPrecioDiario))
                                 .addGap(27, 27, 27)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPrecioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGap(108, 108, 108)
@@ -184,33 +302,35 @@ public class FormHabitacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_IdHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(etiquetaDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(73, 73, 73)
-                        .addComponent(txtCaracteristicas, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(etiquetaCaracteristica, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPrecioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etiquetaPrecioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(CboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,14 +483,55 @@ public class FormHabitacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroActionPerformed
 
-    private void txtNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero1ActionPerformed
+    private void txtPrecioDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioDiarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero1ActionPerformed
+    }//GEN-LAST:event_txtPrecioDiarioActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    private void txt_IdHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_IdHabitacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_IdHabitacionActionPerformed
+
+    private void cboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTipoActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+       habilitar();
+       accion="guardar";
+        
+        
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(txtNumero.getText().length()==0 || txtDescripcion.getText().length()==0 || txtPrecioDiario.getText().length()==0 || txtCaracteristica.getText().length()==0){
+          
+            JOptionPane.showMessageDialog(rootPane,"Debes completar todos los datos para poder guardar", "Aviso de campo vacio", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        
+        ValorHabitacion datos= new ValorHabitacion();
+        FuncionHabitacion func = new FuncionHabitacion();
+        datos.setNumero(txtNumero.getText());
+        //selecciono indice
+        int seleccionado = cboPiso.getSelectedIndex();
+        datos.setPiso((String)cboPiso.getItemAt(seleccionado));
+        
+        datos.setDescripcion(txtDescripcion.getText());
+        datos.setCaracteristicas(txtCaracteristica.getText());
+        datos.setPrecio_diario(Double.parseDouble(txtPrecioDiario.getText()));
+        
+        
+        //Me quede cuando iba a seleccionar Estado
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -414,29 +575,31 @@ public class FormHabitacion extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cboEstado;
+    private javax.swing.JComboBox<String> cboPiso;
     private javax.swing.JComboBox<String> cboTipo;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel etiquetaCaracteristica;
+    private javax.swing.JLabel etiquetaDescripcion;
+    private javax.swing.JLabel etiquetaPrecioDiario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTable tablaListado;
     private javax.swing.JLabel totalRegistro;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JLabel txtCaracteristicas;
-    private javax.swing.JLabel txtDescripcion;
+    private javax.swing.JTextArea txtCaracteristica;
+    private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtNumero1;
-    private javax.swing.JLabel txtPrecioDiario;
+    private javax.swing.JTextField txtPrecioDiario;
+    private javax.swing.JTextField txt_IdHabitacion;
     // End of variables declaration//GEN-END:variables
 }
