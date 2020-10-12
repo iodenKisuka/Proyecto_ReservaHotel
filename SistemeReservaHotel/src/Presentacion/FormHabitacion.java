@@ -23,10 +23,9 @@ public class FormHabitacion extends javax.swing.JFrame {
         initComponents();
     }
     // declaracion de variables
-    private String accion="guardar";
-    
-    
-    void ocultar_columnas(){
+    private String accion = "guardar";
+
+    void ocultar_columnas() {
         //traigo la tabla le pido la columna y ledigo que esa columna va a tener un ancho max es de cero
         tablaListado.getColumnModel().getColumn(0).setMaxWidth(0);
         //ancho minimo es de cero
@@ -34,9 +33,9 @@ public class FormHabitacion extends javax.swing.JFrame {
         //
         tablaListado.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
-    
+
     //deshabilitar la caja de texto
-    void inhabilitar(){
+    void inhabilitar() {
         //no se visualice
         txt_IdHabitacion.setVisible(false);
         //Este deshabilitado
@@ -56,12 +55,12 @@ public class FormHabitacion extends javax.swing.JFrame {
         txtPrecioDiario.setText("");
         txtCaracteristica.setText("");
         txtDescripcion.setText("");
-        
+
     }
-    
-    void habilitar(){
-       // txt_IdHabitacion.setVisible(false);
-      
+
+    void habilitar() {
+        // txt_IdHabitacion.setVisible(false);
+
         cboPiso.setEnabled(true);
         txtNumero.setEnabled(true);
         etiquetaDescripcion.setEnabled(true);
@@ -69,40 +68,35 @@ public class FormHabitacion extends javax.swing.JFrame {
         etiquetaPrecioDiario.setEnabled(true);
         cboEstado.setEnabled(true);
         cboTipo.setEnabled(true);
-        
+
         btnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnEliminar.setEnabled(true);
-       
+
         txt_IdHabitacion.setText("");
         txtDescripcion.setText("");
         txtCaracteristica.setText("");
         txtPrecioDiario.setText("");
     }
-    
-    void mostrar(String buscar){
+
+    void mostrar(String buscar) {
         try {
             DefaultTableModel modelo;
             FuncionHabitacion func = new FuncionHabitacion();
             modelo = func.mostrar(buscar);
-            
+
             tablaListado.setModel(modelo);
             ocultar_columnas();
-            totalRegistro.setText("Total Registro: "+Integer.toString(func.totalRegistro));
-            
+            totalRegistro.setText("Total Registro: " + Integer.toString(func.totalRegistro));
+
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(rootPane,e);
+
+            JOptionPane.showMessageDialog(rootPane, "Ocurrio un Error en la busqueda" + "\n " + e, "Aviso de Error", JOptionPane.ERROR_MESSAGE);
+
         }
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -500,38 +494,56 @@ public class FormHabitacion extends javax.swing.JFrame {
     }//GEN-LAST:event_cboTipoActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-       habilitar();
-       accion="guardar";
-        
-        
+        habilitar();
+        accion = "guardar";
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(txtNumero.getText().length()==0 || txtDescripcion.getText().length()==0 || txtPrecioDiario.getText().length()==0 || txtCaracteristica.getText().length()==0){
-          
-            JOptionPane.showMessageDialog(rootPane,"Debes completar todos los datos para poder guardar", "Aviso de campo vacio", JOptionPane.WARNING_MESSAGE);
-            
+        if (txtNumero.getText().length() == 0 || txtDescripcion.getText().length() == 0 || txtPrecioDiario.getText().length() == 0 || txtCaracteristica.getText().length() == 0) {
+
+            JOptionPane.showMessageDialog(rootPane, "Debes completar todos los datos para poder guardar", "Aviso de campo vacio", JOptionPane.WARNING_MESSAGE);
+
         }
-        
-        ValorHabitacion datos= new ValorHabitacion();
+        else{
+
+        ValorHabitacion datos = new ValorHabitacion();
         FuncionHabitacion func = new FuncionHabitacion();
         datos.setNumero(txtNumero.getText());
         //selecciono indice
         int seleccionado = cboPiso.getSelectedIndex();
-        datos.setPiso((String)cboPiso.getItemAt(seleccionado));
-        
+        datos.setPiso((String) cboPiso.getItemAt(seleccionado));
+
         datos.setDescripcion(txtDescripcion.getText());
         datos.setCaracteristicas(txtCaracteristica.getText());
         datos.setPrecio_diario(Double.parseDouble(txtPrecioDiario.getText()));
-        
-        
-        //Me quede cuando iba a seleccionar Estado
-        
+
+        seleccionado = cboEstado.getSelectedIndex();
+        datos.setPiso((String) cboEstado.getItemAt(seleccionado));
+
+        seleccionado = cboTipo.getSelectedIndex();
+        datos.setPiso((String) cboTipo.getItemAt(seleccionado));
+
+        if (accion.equals("guardar")) {
+            //verifico si se inserto datos
+            if (func.insertar(datos)) {
+                JOptionPane.showMessageDialog(rootPane, "La habitación fue insertada correctamente", "Aviso de insercción exitosa", JOptionPane.INFORMATION_MESSAGE);
+                //muestro todos los registros
+                mostrar("");
+            }
+        } else if (accion.equals("editar")) {
+            datos.setIdhabitacion(Integer.parseInt(txt_IdHabitacion.getText()));
+            if (func.insertar(datos)) {
+                JOptionPane.showMessageDialog(rootPane, "La habitación fue editada correctamente", "Aviso de edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+                //muestro todos los registros
+                mostrar("");
+            }
+
+        }
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    
-    
-    
     /**
      * @param args the command line arguments
      */

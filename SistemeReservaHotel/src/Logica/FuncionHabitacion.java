@@ -47,7 +47,9 @@ public class FuncionHabitacion {
             }
             
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null,e);
+            //JOptionPane.showConfirmDialog(null,e);
+            JOptionPane.showMessageDialog(null,"Ocurrio un Error en la Conexión base de datos"+"\n "+e, "Aviso de insercción exitosa", JOptionPane.ERROR_MESSAGE);
+          
             return null;
         }
         return null;
@@ -77,7 +79,9 @@ public class FuncionHabitacion {
             
             
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null,e);
+            //JOptionPane.showConfirmDialog(null,e);
+            JOptionPane.showMessageDialog(null,"Ocurrio un Error en la Conexión base de datos al intentar insertar"+"\n "+e, "Aviso de Error", JOptionPane.ERROR_MESSAGE);
+          
             return false;
         }
        
@@ -104,7 +108,9 @@ public class FuncionHabitacion {
                 return false;
             }
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null,e);
+            //JOptionPane.showConfirmDialog(null,e);
+            JOptionPane.showMessageDialog(null,"Ocurrio un Error en la Conexión base de datos al intentar Editar"+"\n "+e, "Aviso de Error", JOptionPane.ERROR_MESSAGE);
+          
             return false;
         }
        
@@ -126,7 +132,9 @@ public class FuncionHabitacion {
             }
             
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null,e);
+            //JOptionPane.showConfirmDialog(null,e);
+            JOptionPane.showMessageDialog(null,"Ocurrio un Error en la Conexión base de datos al intentar Eliminar"+"\n "+e, "Aviso de Error", JOptionPane.ERROR_MESSAGE);
+          
            return false;
         }
        
