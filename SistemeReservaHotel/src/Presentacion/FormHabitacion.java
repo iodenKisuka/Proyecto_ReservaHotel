@@ -155,6 +155,11 @@ public class FormHabitacion extends javax.swing.JFrame {
                 txtNumeroActionPerformed(evt);
             }
         });
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyTyped(evt);
+            }
+        });
 
         CboEstado.setForeground(new java.awt.Color(51, 0, 51));
         CboEstado.setText("Estado:");
@@ -226,6 +231,11 @@ public class FormHabitacion extends javax.swing.JFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Folder-Delete.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         txt_IdHabitacion.setBackground(new java.awt.Color(255, 255, 255));
         txt_IdHabitacion.setForeground(new java.awt.Color(0, 0, 0));
@@ -380,6 +390,11 @@ public class FormHabitacion extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
@@ -544,6 +559,45 @@ public class FormHabitacion extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (!txt_IdHabitacion.getText().equals("")) {
+            int confirmacion= JOptionPane.showConfirmDialog(rootPane,"¿Estás seguro que desea Eliminar la habitación?","Confirar",2);
+            if(confirmacion==0){
+                FuncionHabitacion func= new FuncionHabitacion();
+                ValorHabitacion datos= new ValorHabitacion();
+                
+                
+                datos.setIdhabitacion(Integer.parseInt(txt_IdHabitacion.getText()));
+                func.eliminar(datos);
+                mostra("");
+                inhabilitar();
+            }
+        
+        
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+            
+        
+          if(Character.isLetter(c)) {
+              getToolkit().beep();
+              
+              evt.consume();
+             
+              //Error.setText("Ingresa Solo Numeros");
+              }
+    }//GEN-LAST:event_txtNumeroKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -614,4 +668,8 @@ public class FormHabitacion extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrecioDiario;
     private javax.swing.JTextField txt_IdHabitacion;
     // End of variables declaration//GEN-END:variables
+
+    private void mostra(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
